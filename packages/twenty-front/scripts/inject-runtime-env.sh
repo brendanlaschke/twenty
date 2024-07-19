@@ -1,12 +1,8 @@
 #!/bin/sh
-echo "Generating env-config.js file from runtime environment variables..."
+echo "Generating env in index.html from runtime environment variables..."
 
-BASE_FILENAME="build/env-config.js"
-mkdir -p build
-rm -rf "./$BASE_FILENAME"
+BASE_FILENAME="build/index.html"
+orig_line="{{env_replaced_by_script}}"
+rep="window._env_ = { REACT_APP_SERVER_BASE_URL: \"$REACT_APP_SERVER_BASE_URL\" }"
 
-{
-	echo "window._env_ = {"
-	echo "  REACT_APP_SERVER_BASE_URL: \"$REACT_APP_SERVER_BASE_URL\","
-	echo "}"
-} > "./$BASE_FILENAME"
+sed -i '' "s/${orig_line}/${rep}/g" "./$BASE_FILENAME"

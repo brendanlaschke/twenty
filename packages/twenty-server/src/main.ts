@@ -62,7 +62,7 @@ const bootstrap = async () => {
     }),
   );
 
-  // Create the env-config.js of the front at runtime
+  // Create the env in index.html of the front at runtime
   generateFrontConfig();
 
   await app.listen(process.env.PORT ?? 3000);
