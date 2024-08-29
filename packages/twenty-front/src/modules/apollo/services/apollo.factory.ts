@@ -5,6 +5,7 @@ import {
   fromPromise,
   ServerError,
   ServerParseError,
+  split,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
@@ -16,7 +17,10 @@ import { AuthTokenPair } from '~/generated/graphql';
 import { isDefined } from '~/utils/isDefined';
 import { logDebug } from '~/utils/logDebug';
 
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLFormattedError } from 'graphql';
+import { createClient } from 'graphql-ws';
 import { ApolloManager } from '../types/apolloManager.interface';
 import { loggerLink } from '../utils';
 
@@ -55,6 +59,24 @@ export class ApolloFactory<TCacheShape> implements ApolloManager<TCacheShape> {
       const httpLink = createUploadLink({
         uri,
       });
+
+      const wsLink = new GraphQLWsLink(
+        createClient({
+          url: uri?.toString().replace(/https?/g, 'ws') || '',
+        }),
+      );
+
+      const splitLink = split(
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return (
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
+          );
+        },
+        wsLink,
+        httpLink,
+      );
 
       const authLink = setContext(async (_, { headers }) => {
         return {
@@ -142,7 +164,7 @@ export class ApolloFactory<TCacheShape> implements ApolloManager<TCacheShape> {
           ...(extraLinks || []),
           isDebugMode ? logger : null,
           retryLink,
-          httpLink,
+          splitLink,
         ].filter(isDefined),
       );
     };

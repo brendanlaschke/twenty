@@ -350,6 +350,7 @@ export type Mutation = {
   deleteOneServerlessFunction: ServerlessFunction;
   deleteUser: User;
   disablePostgresProxy: PostgresCredentials;
+  disableWorkflowTrigger: Scalars['Boolean'];
   emailPasswordResetLink: EmailPasswordResetLink;
   enablePostgresProxy: PostgresCredentials;
   enableWorkflowTrigger: Scalars['Boolean'];
@@ -427,6 +428,11 @@ export type MutationDeleteOneObjectArgs = {
 
 export type MutationDeleteOneServerlessFunctionArgs = {
   input: DeleteServerlessFunctionInput;
+};
+
+
+export type MutationDisableWorkflowTriggerArgs = {
+  workflowVersionId: Scalars['String'];
 };
 
 
@@ -563,6 +569,33 @@ export type ObjectFieldsConnection = {
   edges: Array<FieldEdge>;
   /** Paging information */
   pageInfo: PageInfo;
+};
+
+export type ObjectRecordCreateEvent = {
+  __typename?: 'ObjectRecordCreateEvent';
+  objectMetadata: Scalars['JSON'];
+  properties: Scalars['JSON'];
+  recordId: Scalars['String'];
+  userId: Scalars['String'];
+  workspaceMemberId: Scalars['String'];
+};
+
+export type ObjectRecordDeleteEvent = {
+  __typename?: 'ObjectRecordDeleteEvent';
+  objectMetadata: Scalars['JSON'];
+  properties: Scalars['JSON'];
+  recordId: Scalars['String'];
+  userId: Scalars['String'];
+  workspaceMemberId: Scalars['String'];
+};
+
+export type ObjectRecordUpdateEvent = {
+  __typename?: 'ObjectRecordUpdateEvent';
+  objectMetadata: Scalars['JSON'];
+  properties: Scalars['JSON'];
+  recordId: Scalars['String'];
+  userId: Scalars['String'];
+  workspaceMemberId: Scalars['String'];
 };
 
 /** Onboarding status */
@@ -864,6 +897,13 @@ export enum SortNulls {
   NullsFirst = 'NULLS_FIRST',
   NullsLast = 'NULLS_LAST'
 }
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  recordCreated: ObjectRecordCreateEvent;
+  recordDeleted: ObjectRecordDeleteEvent;
+  recordUpdated: ObjectRecordUpdateEvent;
+};
 
 export enum SubscriptionInterval {
   Day = 'Day',
@@ -1185,6 +1225,7 @@ export type Field = {
   isSystem?: Maybe<Scalars['Boolean']>;
   label: Scalars['String'];
   name: Scalars['String'];
+  object?: Maybe<Object>;
   options?: Maybe<Scalars['JSON']>;
   relationDefinition?: Maybe<RelationDefinition>;
   settings?: Maybe<Scalars['JSON']>;

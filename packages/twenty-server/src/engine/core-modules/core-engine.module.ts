@@ -14,6 +14,7 @@ import { PostgresCredentialsModule } from 'src/engine/core-modules/postgres-cred
 import { UserModule } from 'src/engine/core-modules/user/user.module';
 import { WorkflowTriggerApiModule } from 'src/engine/core-modules/workflow/workflow-trigger-api.module';
 import { WorkspaceModule } from 'src/engine/core-modules/workspace/workspace.module';
+import { SubscriptionModule } from 'src/engine/subscriptions/subscriptions.module';
 import { WorkspaceEventEmitterModule } from 'src/engine/workspace-event-emitter/workspace-event-emitter.module';
 
 import { AnalyticsModule } from './analytics/analytics.module';
@@ -35,6 +36,7 @@ import { FileModule } from './file/file.module';
     TimelineCalendarEventModule,
     UserModule,
     WorkspaceModule,
+    SubscriptionModule,
     AISQLQueryModule,
     PostgresCredentialsModule,
     WorkflowTriggerApiModule,
@@ -49,6 +51,7 @@ import { FileModule } from './file/file.module';
     TimelineCalendarEventModule,
     UserModule,
     WorkspaceModule,
+    SubscriptionModule,
   ],
 })
 export class CoreEngineModule {}

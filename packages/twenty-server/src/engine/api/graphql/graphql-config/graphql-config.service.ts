@@ -64,7 +64,15 @@ export class GraphQLConfigService
     const config: YogaDriverConfig = {
       autoSchemaFile: true,
       include: [CoreEngineModule],
+      subscriptions: {
+        'graphql-ws': {
+          onConnect: async (connectionParams, webSocket, context) => {
+            console.log('onConnect', connectionParams);
+          },
+        },
+      },
       conditionalSchema: async (context) => {
+        console.log('conditionalSchema');
         let user: User | null | undefined;
         let workspace: Workspace | undefined;
 
@@ -122,7 +130,6 @@ export class GraphQLConfigService
         }
       },
       resolvers: { JSON: GraphQLJSON },
-      plugins: plugins,
     };
 
     if (isDebugMode) {

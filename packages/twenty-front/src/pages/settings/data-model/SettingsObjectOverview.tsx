@@ -1,11 +1,21 @@
 import { ReactFlowProvider } from 'reactflow';
 
-import { SettingsDataModelOverview } from '@/settings/data-model/graph-overview/components/SettingsDataModelOverview';
 import { SubMenuTopBarContainer } from '@/ui/layout/page/SubMenuTopBarContainer';
 import { Breadcrumb } from '@/ui/navigation/bread-crumb/components/Breadcrumb';
+import { gql, useSubscription } from '@apollo/client';
 import { IconHierarchy2 } from 'twenty-ui';
 
+const Sub = gql`
+  subscription recordCreated {
+    recordCreated {
+      recordId
+    }
+  }
+`;
+
 export const SettingsObjectOverview = () => {
+  const { data } = useSubscription(Sub);
+
   return (
     <SubMenuTopBarContainer
       Icon={IconHierarchy2}
@@ -21,7 +31,8 @@ export const SettingsObjectOverview = () => {
       }
     >
       <ReactFlowProvider>
-        <SettingsDataModelOverview />
+        {data}
+        {/*<SettingsDataModelOverview />*/}
       </ReactFlowProvider>
     </SubMenuTopBarContainer>
   );
