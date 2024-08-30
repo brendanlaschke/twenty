@@ -11,7 +11,6 @@ export enum SettingsPath {
   Objects = 'objects',
   ObjectOverview = 'objects/overview',
   ObjectDetail = 'objects/:objectSlug',
-  ObjectEdit = 'objects/:objectSlug/edit',
   ObjectNewFieldStep1 = 'objects/:objectSlug/new-field/step-1',
   ObjectNewFieldStep2 = 'objects/:objectSlug/new-field/step-2',
   ObjectFieldEdit = 'objects/:objectSlug/:fieldSlug',

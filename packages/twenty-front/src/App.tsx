@@ -59,7 +59,6 @@ import { SettingsNewAccount } from '~/pages/settings/accounts/SettingsNewAccount
 import { SettingsCRMMigration } from '~/pages/settings/crm-migration/SettingsCRMMigration';
 import { SettingsNewObject } from '~/pages/settings/data-model/SettingsNewObject';
 import { SettingsObjectDetailPage } from '~/pages/settings/data-model/SettingsObjectDetailPage';
-import { SettingsObjectEdit } from '~/pages/settings/data-model/SettingsObjectEdit';
 import { SettingsObjectFieldEdit } from '~/pages/settings/data-model/SettingsObjectFieldEdit';
 import { SettingsObjectNewFieldStep1 } from '~/pages/settings/data-model/SettingsObjectNewField/SettingsObjectNewFieldStep1';
 import { SettingsObjectNewFieldStep2 } from '~/pages/settings/data-model/SettingsObjectNewField/SettingsObjectNewFieldStep2';
@@ -225,10 +224,6 @@ const createRouter = (
                 <Route
                   path={SettingsPath.ObjectDetail}
                   element={<SettingsObjectDetailPage />}
-                />
-                <Route
-                  path={SettingsPath.ObjectEdit}
-                  element={<SettingsObjectEdit />}
                 />
                 <Route
                   path={SettingsPath.NewObject}

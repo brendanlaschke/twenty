@@ -112,6 +112,7 @@ export {
   IconLayoutSidebarRightCollapse,
   IconLayoutSidebarRightExpand,
   IconLink,
+  IconListDetails,
   IconLinkOff,
   IconList,
   IconListCheck,
