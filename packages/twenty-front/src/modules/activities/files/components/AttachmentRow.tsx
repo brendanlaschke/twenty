@@ -60,7 +60,9 @@ const StyledLink = styled.a`
 export const AttachmentRow = ({ attachment }: { attachment: Attachment }) => {
   const theme = useTheme();
   const [isEditing, setIsEditing] = useState(false);
-  const [attachmentName, setAttachmentName] = useState(attachment.name);
+  const [editedAttachmentExtension, setEditedAttachmentExtension] =
+    useState<string>();
+  const [attachmentName, setAttachmentName] = useState<string>();
 
   const fieldContext = useMemo(
     () => ({ recoilScopeId: attachment?.id ?? '' }),
@@ -81,13 +83,17 @@ export const AttachmentRow = ({ attachment }: { attachment: Attachment }) => {
 
   const handleRename = () => {
     setIsEditing(true);
+    setAttachmentName(attachment.name.split('.').shift());
+    setEditedAttachmentExtension(attachment.name.split('.').pop());
   };
 
   const handleOnBlur = () => {
     setIsEditing(false);
     updateOneAttachment({
       idToUpdate: attachment.id,
-      updateOneRecordInput: { name: attachmentName },
+      updateOneRecordInput: {
+        name: attachmentName + '.' + editedAttachmentExtension,
+      },
     });
   };
 
@@ -101,13 +107,16 @@ export const AttachmentRow = ({ attachment }: { attachment: Attachment }) => {
         <StyledLeftContent>
           <AttachmentIcon attachmentType={attachment.type} />
           {isEditing ? (
-            <TextInput
-              value={attachmentName}
-              onChange={handleOnChange}
-              onBlur={handleOnBlur}
-              autoFocus
-              fullWidth
-            />
+            <>
+              <TextInput
+                value={attachmentName}
+                onChange={handleOnChange}
+                onBlur={handleOnBlur}
+                autoFocus
+                fullWidth
+              />
+              .{editedAttachmentExtension}
+            </>
           ) : (
             <StyledLink
               href={getFileAbsoluteURI(attachment.fullPath)}
