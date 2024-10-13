@@ -2,6 +2,7 @@ import { AttachmentDropdown } from '@/activities/files/components/AttachmentDrop
 import { AttachmentIcon } from '@/activities/files/components/AttachmentIcon';
 import { Attachment } from '@/activities/files/types/Attachment';
 import { downloadFile } from '@/activities/files/utils/downloadFile';
+import { parseFileName } from '@/activities/files/utils/parseFileName';
 import { CoreObjectNameSingular } from '@/object-metadata/types/CoreObjectNameSingular';
 import { useDeleteOneRecord } from '@/object-record/hooks/useDeleteOneRecord';
 import { useUpdateOneRecord } from '@/object-record/hooks/useUpdateOneRecord';
@@ -83,8 +84,9 @@ export const AttachmentRow = ({ attachment }: { attachment: Attachment }) => {
 
   const handleRename = () => {
     setIsEditing(true);
-    setAttachmentName(attachment.name.split('.').shift());
-    setEditedAttachmentExtension(attachment.name.split('.').pop());
+    const file = parseFileName(attachment.name);
+    setAttachmentName(file.name);
+    setEditedAttachmentExtension(file.extension);
   };
 
   const handleOnBlur = () => {
