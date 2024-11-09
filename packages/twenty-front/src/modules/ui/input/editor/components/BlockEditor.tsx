@@ -1,6 +1,10 @@
 import { filterSuggestionItems } from '@blocknote/core';
 import { BlockNoteView } from '@blocknote/mantine';
 import { SuggestionMenuController } from '@blocknote/react';
+import {
+  PDFExporter,
+  pdfDefaultSchemaMappings,
+} from '@blocknote/xl-pdf-exporter';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ClipboardEvent } from 'react';
@@ -12,6 +16,8 @@ import {
   CustomSlashMenu,
   SuggestionItem,
 } from '@/ui/input/editor/components/CustomSlashMenu';
+
+import * as ReactPDF from '@react-pdf/renderer';
 
 interface BlockEditorProps {
   editor: typeof BLOCK_SCHEMA.BlockNoteEditor;
@@ -133,6 +139,17 @@ export const BlockEditor = ({
 
   return (
     <StyledEditor>
+      <div
+        style={{
+          background: 'red',
+          position: 'absolute',
+          right: 0,
+          top: 0,
+          height: 30,
+          width: 30,
+          zIndex: 1,
+        }}
+      ></div>
       <BlockNoteView
         onFocus={handleFocus}
         onBlur={handleBlur}

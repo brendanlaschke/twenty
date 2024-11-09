@@ -6,8 +6,10 @@
     "@aws-sdk/client-lambda": "^3.614.0",
     "@aws-sdk/client-s3": "^3.363.0",
     "@aws-sdk/credential-providers": "^3.363.0",
-    "@blocknote/mantine": "^0.15.3",
-    "@blocknote/react": "^0.15.3",
+    "@blocknote/mantine": "^0.19.0",
+    "@blocknote/react": "^0.19.0",
+    "@blocknote/xl-multi-column": "^0.19.0",
+    "@blocknote/xl-pdf-exporter": "^0.19.0",
     "@codesandbox/sandpack-react": "^2.13.5",
     "@dagrejs/dagre": "^1.1.2",
     "@emotion/react": "^11.11.1",
@@ -43,6 +45,7 @@
     "@ptc-org/nestjs-query-typeorm": "4.2.1-alpha.2",
     "@react-email/components": "0.0.12",
     "@react-email/render": "0.0.10",
+    "@react-pdf/renderer": "^4.0.0",
     "@sentry/node": "^8",
     "@sentry/profiling-node": "^8",
     "@sentry/react": "^8",
@@ -347,7 +350,8 @@
   "resolutions": {
     "graphql": "16.8.0",
     "type-fest": "4.10.1",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "prosemirror-model": "1.23.0"
   },
   "version": "0.2.1",
   "nx": {},

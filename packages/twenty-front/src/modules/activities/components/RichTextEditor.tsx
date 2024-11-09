@@ -1,5 +1,9 @@
 import { useApolloClient } from '@apollo/client';
 import { useCreateBlockNote } from '@blocknote/react';
+import {
+  multiColumnDropCursor,
+  locales as multiColumnLocales,
+} from '@blocknote/xl-multi-column';
 import { isArray, isNonEmptyString } from '@sniptt/guards';
 import { useCallback, useMemo } from 'react';
 import { useRecoilCallback, useRecoilState } from 'recoil';
@@ -27,6 +31,7 @@ import { useUploadAttachmentFile } from '@/activities/files/hooks/useUploadAttac
 import { Note } from '@/activities/types/Note';
 import { Task } from '@/activities/types/Task';
 import { CoreObjectNameSingular } from '@/object-metadata/types/CoreObjectNameSingular';
+import { locales } from '@blocknote/core';
 import '@blocknote/core/fonts/inter.css';
 import '@blocknote/mantine/style.css';
 import '@blocknote/react/style.css';
@@ -279,6 +284,11 @@ export const RichTextEditor = ({
     initialContent: initialBody,
     domAttributes: { editor: { class: 'editor' } },
     schema: BLOCK_SCHEMA,
+    dropCursor: multiColumnDropCursor,
+    dictionary: {
+      ...locales.en,
+      multi_column: multiColumnLocales.en,
+    },
     uploadFile: handleEditorBuiltInUploadFile,
   });
 

@@ -53,6 +53,8 @@ export {
   IconCodeCircle,
   IconCoins,
   IconColorSwatch,
+  IconColumns2,
+  IconColumns3,
   IconMessageCircle as IconComment,
   IconCopy,
   IconCreativeCommonsSa,

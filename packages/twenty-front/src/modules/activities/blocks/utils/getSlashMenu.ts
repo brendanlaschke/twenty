@@ -1,5 +1,8 @@
 import { getDefaultReactSlashMenuItems } from '@blocknote/react';
 import {
+  IconCode,
+  IconColumns2,
+  IconColumns3,
   IconComponent,
   IconFile,
   IconH1,
@@ -18,6 +21,7 @@ import {
 
 import { SuggestionItem } from '@/ui/input/editor/components/CustomSlashMenu';
 
+import { getMultiColumnSlashMenuItems } from '@blocknote/xl-multi-column';
 import { BLOCK_SCHEMA } from '../constants/Schema';
 
 const Icons: Record<string, IconComponent> = {
@@ -27,6 +31,9 @@ const Icons: Record<string, IconComponent> = {
   'Numbered List': IconListNumbers,
   'Bullet List': IconList,
   'Check List': IconListCheck,
+  'Code Block': IconCode,
+  'Two Columns': IconColumns2,
+  'Three Columns': IconColumns3,
   Paragraph: IconPilcrow,
   Table: IconTable,
   Image: IconPhoto,
@@ -37,10 +44,12 @@ const Icons: Record<string, IconComponent> = {
 
 export const getSlashMenu = (editor: typeof BLOCK_SCHEMA.BlockNoteEditor) => {
   const items: SuggestionItem[] = [
-    ...getDefaultReactSlashMenuItems(editor).map((x) => ({
-      ...x,
-      Icon: Icons[x.title],
-    })),
+    ...getDefaultReactSlashMenuItems(editor)
+      .concat(getMultiColumnSlashMenuItems(editor))
+      .map((x) => ({
+        ...x,
+        Icon: Icons[x.title],
+      })),
     {
       title: 'File',
       aliases: ['file', 'folder'],
