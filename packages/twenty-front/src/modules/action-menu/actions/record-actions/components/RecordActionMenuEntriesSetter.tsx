@@ -7,55 +7,62 @@ import { contextStoreNumberOfSelectedRecordsComponentState } from '@/context-sto
 import { useObjectMetadataItemById } from '@/object-metadata/hooks/useObjectMetadataItemById';
 import { useRecoilComponentValueV2 } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentValueV2';
 import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
+import { isDefined } from 'twenty-ui';
 
-const globalRecordActionEffects = [ExportRecordsActionEffect];
+const noSelectionRecordActionEffects = [ExportRecordsActionEffect];
 
 const singleRecordActionEffects = [
   ManageFavoritesActionEffect,
   DeleteRecordsActionEffect,
 ];
 
-const multipleRecordActionEffects = [DeleteRecordsActionEffect];
+const multipleRecordActionEffects = [
+  ExportRecordsActionEffect,
+  DeleteRecordsActionEffect,
+];
 
 export const RecordActionMenuEntriesSetter = () => {
-  const contextStoreNumberOfSelectedRecords = useRecoilComponentValueV2(
-    contextStoreNumberOfSelectedRecordsComponentState,
-  );
-
   const contextStoreCurrentObjectMetadataId = useRecoilComponentValueV2(
     contextStoreCurrentObjectMetadataIdComponentState,
   );
 
+  if (!isDefined(contextStoreCurrentObjectMetadataId)) {
+    return null;
+  }
+
+  return (
+    <ActionEffects objectMetadataItemId={contextStoreCurrentObjectMetadataId} />
+  );
+};
+
+const ActionEffects = ({
+  objectMetadataItemId,
+}: {
+  objectMetadataItemId: string;
+}) => {
   const { objectMetadataItem } = useObjectMetadataItemById({
-    objectId: contextStoreCurrentObjectMetadataId ?? '',
+    objectId: objectMetadataItemId,
   });
+
+  const contextStoreNumberOfSelectedRecords = useRecoilComponentValueV2(
+    contextStoreNumberOfSelectedRecordsComponentState,
+  );
 
   const isWorkflowEnabled = useIsFeatureEnabled('IS_WORKFLOW_ENABLED');
 
-  if (!objectMetadataItem) {
-    throw new Error(
-      `Object metadata item not found for id ${contextStoreCurrentObjectMetadataId}`,
-    );
-  }
-
   const actions =
-    contextStoreNumberOfSelectedRecords === 1
-      ? singleRecordActionEffects
-      : multipleRecordActionEffects;
+    contextStoreNumberOfSelectedRecords === 0
+      ? noSelectionRecordActionEffects
+      : contextStoreNumberOfSelectedRecords === 1
+        ? singleRecordActionEffects
+        : multipleRecordActionEffects;
 
   return (
     <>
-      {globalRecordActionEffects.map((ActionEffect, index) => (
-        <ActionEffect
-          key={index}
-          position={index}
-          objectMetadataItem={objectMetadataItem}
-        />
-      ))}
       {actions.map((ActionEffect, index) => (
         <ActionEffect
           key={index}
-          position={globalRecordActionEffects.length + index}
+          position={index}
           objectMetadataItem={objectMetadataItem}
         />
       ))}
